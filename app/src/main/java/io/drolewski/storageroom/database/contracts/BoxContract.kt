@@ -9,5 +9,6 @@ object BoxContract {
         const val COLUMN_NAME_COMMENTARY = "commentary"
         const val COLUMN_NAME_QR_CODE = "qr_code"
         const val COLUMN_NAME_PHOTO_ID = "photo_id"
+        const val COLUMN_NAME_LOCALIZATION_ID = "localization_id"
     }
 }
