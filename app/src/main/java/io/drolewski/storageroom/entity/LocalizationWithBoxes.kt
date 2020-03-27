@@ -6,8 +6,8 @@ import androidx.room.Relation
 class LocalizationWithBoxes(
     @Embedded val localization: Localization,
     @Relation(
-        parentColumn = "localization_id",
-        entityColumn = "localization_id"
+        parentColumn = "localization_name",
+        entityColumn = "localization_name"
     )
     val boxes: List<Box>
 )

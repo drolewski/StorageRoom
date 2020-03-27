@@ -10,6 +10,5 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["localization_name"])]
 )
 data class Localization(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "localization_id") val localizationId: Int,
-    @ColumnInfo(name = "localization_name") val localizationName: String
+    @PrimaryKey @ColumnInfo(name = "localization_name") val localizationName: String
 )
