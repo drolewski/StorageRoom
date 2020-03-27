@@ -3,11 +3,12 @@ package io.drolewski.storageroom.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class ObjectWithPhotos(
-    @Embedded val objectThing: Object,
+class ObjectWithPhotos {
+    @Embedded
+    lateinit var objectThing: Object
     @Relation(
         parentColumn = "object_id",
         entityColumn = "object_id"
     )
-    val photos: List<Photo>
-)
+    lateinit var photos: List<Photo>
+}

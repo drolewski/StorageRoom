@@ -21,4 +21,8 @@ interface CategoryDAO {
     @Transaction
     @Query("SELECT * FROM Category")
     fun getCategoryWithObject(): List<CategoryWithObject>
+
+    @Transaction
+    @Query("SELECT * FROM Category")
+    fun getPlainCategory(): List<Category>
 }

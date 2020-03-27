@@ -3,11 +3,12 @@ package io.drolewski.storageroom.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class BoxWithPhoto(
-    @Embedded val box: Box,
+class BoxWithPhoto {
+    @Embedded
+    lateinit var box: Box
     @Relation(
         parentColumn = "box_photo_id",
         entityColumn = "photo_id"
     )
-    val photo: Photo?
-)
+    lateinit var photo: List<Photo>
+}
