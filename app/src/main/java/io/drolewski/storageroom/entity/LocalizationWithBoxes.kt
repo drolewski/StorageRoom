@@ -3,12 +3,12 @@ package io.drolewski.storageroom.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 
-class LocalizationWithBoxes {
+data class LocalizationWithBoxes(
     @Embedded
-    lateinit var localization: Localization
+    var localization: Localization,
     @Relation(
         parentColumn = "localization_name",
         entityColumn = "localization_name"
     )
-    lateinit var boxes: List<Box>
-}
+    var boxes: List<Box>
+)

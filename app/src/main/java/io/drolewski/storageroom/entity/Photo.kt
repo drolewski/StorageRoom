@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Photo")
 data class Photo(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "photo_id") val photoId: Int = 0,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "photo_id") val photoId: Int,
     @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB) val image: ByteArray? = null,
     @ColumnInfo(name = "object_id") val objectThing: Int?
 ) {

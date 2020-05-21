@@ -4,24 +4,24 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 
-class ObjectWithCategory {
+class ObjectWithCategory(
     @Embedded
-    lateinit var objectThing: Object
+    var objectThing: Object,
     @Relation(
         parentColumn = "object_id",
         entityColumn = "category_id",
         associateBy = Junction(ObjectCategoryCrossRef::class)
     )
-    lateinit var categories: List<Category>
-}
+    var categories: List<Category>
+)
 
-class CategoryWithObject() {
+data class CategoryWithObject(
     @Embedded
-    lateinit var category: Category
+    var category: Category,
     @Relation(
         parentColumn = "category_id",
         entityColumn = "object_id",
         associateBy = Junction(ObjectCategoryCrossRef::class)
     )
-    lateinit var objects: List<Object>
-}
+    var objects: List<Object>
+)

@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["object_name"])]
 )
 data class Object(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "object_id") val objectId: Int = 0,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "object_id") val objectId: Int,
     @ColumnInfo(name = "object_name") val objectName: String,
     @ColumnInfo(name = "ean") val ean: String?,
     @ColumnInfo(name = "commentary") val commentary: String,
