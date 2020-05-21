@@ -6,21 +6,11 @@ import io.drolewski.storageroom.entity.BoxWithObjectsAndCategories
 import io.drolewski.storageroom.entity.BoxWithPhoto
 
 @Dao
-interface BoxDAO {
-    @Insert(entity = Box::class)
-    fun insertBox(vararg box: Box)
+abstract class BoxDAO : GenericDAO<Box>() {
 
-    @Update(entity = Box::class)
-    fun updateBox(vararg box: Box)
-
-    @Delete(entity = Box::class)
-    fun deleteBox(vararg box: Box)
-
-    @Transaction
     @Query("SELECT * FROM Box")
-    fun getBoxWithPhoto(): List<BoxWithPhoto>
+    abstract fun getAll(): ArrayList<Box>
 
-    @Transaction
-    @Query("SELECT * FROM Box")
-    fun getBoxWithObjectsAndCategories(): List<BoxWithObjectsAndCategories>
+    @Query("SELECT * FROM Box where box_id = :entityId")
+    abstract fun getById(entityId: Int): Box
 }

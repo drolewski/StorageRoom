@@ -4,17 +4,11 @@ import androidx.room.*
 import io.drolewski.storageroom.entity.Photo
 
 @Dao
-interface PhotoDAO {
-    @Insert(entity = Photo::class)
-    fun insertPhoto(vararg photo: Photo)
+abstract class PhotoDAO : GenericDAO<Photo>() {
 
-    @Update(entity = Photo::class)
-    fun updatePhoto(vararg photo: Photo)
-
-    @Delete(entity = Photo::class)
-    fun deletePhoto(vararg photo: Photo)
-
-    @Transaction
     @Query("SELECT * FROM Photo")
-    fun getAllPhotos(): List<Photo>
+    abstract fun getAll(): List<Photo>
+
+    @Query("SELECT * FROM Photo where photo_id = :entityId")
+    abstract fun getById(entityId: Int): List<Photo>
 }

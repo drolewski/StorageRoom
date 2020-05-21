@@ -6,21 +6,11 @@ import io.drolewski.storageroom.entity.ObjectWithCategory
 import io.drolewski.storageroom.entity.ObjectWithPhotos
 
 @Dao
-interface ObjectDAO {
-    @Insert(entity = Object::class)
-    fun insertObject(vararg objectThing: Object)
+abstract class ObjectDAO : GenericDAO<Object>() {
 
-    @Update(entity = Object::class)
-    fun updateObject(vararg objectThing: Object)
-
-    @Delete(entity = Object::class)
-    fun deleteObject(vararg objectThing: Object)
-
-    @Transaction
     @Query("SELECT * FROM Object")
-    fun getObjectWithCategory(): List<ObjectWithCategory>
+    abstract fun getAll(): List<Object>
 
-    @Transaction
-    @Query("SELECT * FROM Object")
-    fun getObjectWithPhotos(): List<ObjectWithPhotos>
+    @Query("SELECT * FROM Object where object_id = :entityId")
+    abstract fun getById(entityId: Int): List<Object>
 }

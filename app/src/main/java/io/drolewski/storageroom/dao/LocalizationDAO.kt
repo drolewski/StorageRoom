@@ -5,17 +5,11 @@ import io.drolewski.storageroom.entity.Localization
 import io.drolewski.storageroom.entity.LocalizationWithBoxes
 
 @Dao
-interface LocalizationDAO {
-    @Insert(entity = Localization::class)
-    fun insertLocalization(vararg localization: Localization)
+abstract class LocalizationDAO : GenericDAO<Localization>() {
 
-    @Update(entity = Localization::class)
-    fun updateLocalization(vararg localization: Localization)
-
-    @Delete(entity = Localization::class)
-    fun deleteLocalization(vararg localization: Localization)
-
-    @Transaction
     @Query("SELECT * FROM Localization")
-    fun getLocalizationWithBoxes(): List<LocalizationWithBoxes>
+    abstract fun getAll(): List<Localization>
+
+    @Query("SELECT * FROM Localization where localization_name = :entityName")
+    abstract fun getByName(entityName: String): List<Localization>
 }
