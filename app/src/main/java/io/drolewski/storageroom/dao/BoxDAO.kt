@@ -9,7 +9,7 @@ import io.drolewski.storageroom.entity.BoxWithPhoto
 abstract class BoxDAO : GenericDAO<Box>() {
 
     @Query("SELECT * FROM Box")
-    abstract fun getAll(): ArrayList<Box>
+    abstract fun getAll(): List<Box>
 
     @Query("SELECT * FROM Box where box_id = :entityId")
     abstract fun getById(entityId: Int): Box

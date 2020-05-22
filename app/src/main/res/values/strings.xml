@@ -3,4 +3,11 @@
     <string name="localization">Localization Setup</string>
     <string name="locInput">Localization</string>
     <string name="add">Add</string>
+    <string name="add_localization_title">Add Localization</string>
+    <string name="next">Next</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="previous">Previous</string>
+    <string name="first_fragment_label" />
+    <string name="second_fragment_label" />
+    <string name="starting_menu">Menu Start</string>
 </resources>

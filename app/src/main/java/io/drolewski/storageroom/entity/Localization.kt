@@ -6,8 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "Localization",
-    indices = [Index(value = ["localization_name"])]
+    tableName = "Localization"
 )
 data class Localization(
     @PrimaryKey @ColumnInfo(name = "localization_name") val localizationName: String

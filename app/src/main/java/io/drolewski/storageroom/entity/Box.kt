@@ -6,8 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "Box",
-    indices = [Index(value = ["box_name"])]
+    tableName = "Box"
 )
 data class Box(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "box_id") val boxId: Int,

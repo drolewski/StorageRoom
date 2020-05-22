@@ -7,21 +7,21 @@ import androidx.room.Update
 
 @Dao
 abstract class GenericDAO<T> {
-    @Insert()
+    @Insert
     abstract fun add(obj: T)
 
-    @Insert()
+    @Insert
     abstract fun add(obj: List<T>)
 
-    @Update()
+    @Update
     abstract fun update(obj: T)
 
-    @Update()
+    @Update
     abstract fun update(obj: List<T>)
 
-    @Delete()
+    @Delete
     abstract fun delete(obj: T)
 
-    @Delete()
+    @Delete
     abstract fun delete(obj: List<T>)
 }
