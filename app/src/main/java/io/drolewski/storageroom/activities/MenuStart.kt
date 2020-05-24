@@ -30,7 +30,7 @@ class MenuStart : AppCompatActivity() {
         addBox.setOnClickListener {
             val activityToIntent = Intent(
                 applicationContext,
-                AddBox::class.java
+                BoxList::class.java
             )
             startActivity(activityToIntent)
         }

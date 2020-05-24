@@ -13,4 +13,7 @@ abstract class BoxDAO : GenericDAO<Box>() {
 
     @Query("SELECT * FROM Box where box_id = :entityId")
     abstract fun getById(entityId: Int): Box
+
+    @Query("SELECT * FROM Box JOIN Photo ON Box.box_photo_id = Photo.photo_id")
+    abstract fun getAllWithPhotos(): List<BoxWithPhoto>
 }

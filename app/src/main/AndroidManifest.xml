@@ -9,7 +9,6 @@
         android:name="android.hardware.camera.autofocus"
         android:required="true" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,11 +16,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddBox"></activity>
+        <activity android:name=".box"></activity>
+        <activity android:name=".BoxList" />
+        <activity android:name=".AddBox" />
         <activity android:name=".AddSingleItem" />
         <activity android:name=".AddItem" />
-        <activity android:name=".LocalizationList"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".LocalizationList"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MenuStart" />
         <activity
             android:name=".AddLocalization"
