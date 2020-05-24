@@ -18,5 +18,21 @@ class MenuStart : AppCompatActivity() {
             )
             startActivity(activityToIntent)
         }
+
+        addItem.setOnClickListener{
+            val activityToIntent = Intent(
+                applicationContext,
+                AddItem::class.java
+            )
+            startActivity(activityToIntent)
+        }
+
+        addBox.setOnClickListener {
+            val activityToIntent = Intent(
+                applicationContext,
+                AddBox::class.java
+            )
+            startActivity(activityToIntent)
+        }
     }
 }
