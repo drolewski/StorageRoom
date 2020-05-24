@@ -20,7 +20,8 @@
         <activity android:name=".AddBox"></activity>
         <activity android:name=".AddSingleItem" />
         <activity android:name=".AddItem" />
-        <activity android:name=".LocalizationList" />
+        <activity android:name=".LocalizationList"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".MenuStart" />
         <activity
             android:name=".AddLocalization"

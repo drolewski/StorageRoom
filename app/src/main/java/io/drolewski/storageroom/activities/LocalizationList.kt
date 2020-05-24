@@ -50,6 +50,10 @@ class LocalizationList : AppCompatActivity() {
                 error.show()
             }
         }
+
+        locInput.setOnClickListener{
+            locInput.text.clear()
+        }
     }
 
     fun getFromDb(db: AppDatabase){
