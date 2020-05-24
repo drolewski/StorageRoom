@@ -62,6 +62,18 @@ class AddSingleItem : AppCompatActivity() {
                 }
             }
         }
+
+        itemName.setOnClickListener{
+            itemName.text.clear()
+        }
+
+        ean.setOnClickListener{
+            ean.text.clear()
+        }
+
+        commentary.setOnClickListener{
+            commentary.text.clear()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
