@@ -14,14 +14,16 @@ class MainActivity : AppCompatActivity() {
 
         val db = AppDatabase(applicationContext)
         Thread{
-            val isConfigured = db.localizationDAO().getAll().isEmpty()
+            val isConfigured = db.localizationDAO().getAll().size
 
-            if(isConfigured) {
-                val activityToIntent = Intent(
-                    applicationContext,
-                    MenuStart::class.java
-                )
-                startActivity(activityToIntent)
+            if(isConfigured > 0) {
+                configurationButton.setOnClickListener {
+                    val activityToIntent = Intent(
+                        applicationContext,
+                        MenuStart::class.java
+                    )
+                    startActivity(activityToIntent)
+                }
             }else{
                 configurationButton.setOnClickListener{
                     val activityToIntent = Intent(
