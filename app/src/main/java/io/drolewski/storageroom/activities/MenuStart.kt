@@ -34,5 +34,13 @@ class MenuStart : AppCompatActivity() {
             )
             startActivity(activityToIntent)
         }
+
+        addCategory.setOnClickListener {
+            val activityToIntent = Intent(
+                applicationContext,
+                AddCategory::class.java
+            )
+            startActivity(activityToIntent)
+        }
     }
 }
