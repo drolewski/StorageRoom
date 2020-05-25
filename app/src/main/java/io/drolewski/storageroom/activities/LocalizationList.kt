@@ -54,6 +54,20 @@ class LocalizationList : AppCompatActivity() {
         locInput.setOnClickListener{
             locInput.text.clear()
         }
+
+        listLoc.setOnItemClickListener{parent, view, position, id ->
+            Thread {
+                val db = AppDatabase(applicationContext)
+                val loc = db.localizationDAO().getAll()[position]
+                db.localizationDAO().delete(loc)
+            }.start()
+            val activityToIntent = Intent(
+                applicationContext,
+                LocalizationList::class.java
+            )
+            startActivity(activityToIntent)
+
+        }
     }
 
     fun getFromDb(db: AppDatabase){
