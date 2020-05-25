@@ -45,7 +45,7 @@ class AddBox : Activity() {
                         null
                     ))
                     if (selectedItemInSpinner.selectedItemInSpinner == null){
-                        selectedItemInSpinner.selectedItemInSpinner = "everywhere"
+                        selectedItemInSpinner.selectedItemInSpinner = "ogolne"
                     }
                     db.boxDAO().add(Box(
                         boxId,

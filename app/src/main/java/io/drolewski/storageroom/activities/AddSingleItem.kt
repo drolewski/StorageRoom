@@ -1,13 +1,14 @@
 package io.drolewski.storageroom.activities
 
-import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import io.drolewski.storageroom.database.AppDatabase
 import io.drolewski.storageroom.entity.Object
 import io.drolewski.storageroom.entity.Photo
@@ -18,11 +19,15 @@ class AddSingleItem : AppCompatActivity() {
 
     var imageBitmap: Bitmap? = null
     val REQUEST_IMAGE_CAPTURE = 1
+    val PERMISSION_REQUEST_CODE = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_item)
 
+        if(!checkPermission()){
+            requestPermission()
+        }
 
         addIt.setOnClickListener {
             var preparedEAN: String? = null
@@ -45,7 +50,8 @@ class AddSingleItem : AppCompatActivity() {
                     )
                     val stream = ByteArrayOutputStream()
                     imageBitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
-                    db.photoDAO().add(Photo(db.photoDAO().getAll().size + 1, stream.toByteArray(), objId))
+                    db.photoDAO()
+                        .add(Photo(db.photoDAO().getAll().size + 1, stream.toByteArray(), objId))
                 }.start()
                 val activityToIntent = Intent(
                     applicationContext,
@@ -63,15 +69,15 @@ class AddSingleItem : AppCompatActivity() {
             }
         }
 
-        itemName.setOnClickListener{
+        itemName.setOnClickListener {
             itemName.text.clear()
         }
 
-        ean.setOnClickListener{
+        ean.setOnClickListener {
             ean.text.clear()
         }
 
-        commentary.setOnClickListener{
+        commentary.setOnClickListener {
             commentary.text.clear()
         }
     }
@@ -84,10 +90,23 @@ class AddSingleItem : AppCompatActivity() {
         }
     }
 
-    fun validateField(itemEle: EditText) : Boolean{
+    fun checkPermission(): Boolean{
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
+            return false
+        }
+        return true
+    }
+
+    fun requestPermission() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(android.Manifest.permission.CAMERA),
+            PERMISSION_REQUEST_CODE);
+    }
+
+    fun validateField(itemEle: EditText): Boolean {
         val nameInput = itemEle.text.toString().trim()
 
-        if(nameInput.isEmpty()){
+        if (nameInput.isEmpty()) {
             itemEle.setError("Field can\'t be empty")
             return false
         }

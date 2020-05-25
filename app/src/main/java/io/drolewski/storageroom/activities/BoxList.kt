@@ -14,6 +14,7 @@ import io.drolewski.storageroom.database.AppDatabase
 import io.drolewski.storageroom.model.BoxViewModel
 import io.drolewski.storageroom.model.ObjectViewModel
 import kotlinx.android.synthetic.main.activity_box_list.*
+import kotlinx.android.synthetic.main.activity_edit_box.*
 import java.io.ByteArrayInputStream
 
 class BoxList : AppCompatActivity() {
@@ -45,6 +46,14 @@ class BoxList : AppCompatActivity() {
             })
         }.start()
 
+        boxList.setOnItemClickListener{parent, view, position, id ->
+            val activityToIntent = Intent(
+                applicationContext,
+                EditBox::class.java
+            )
+            activityToIntent.putExtra("id", id)
+            startActivity(activityToIntent)
+        }
 
         addBoxButton.setOnClickListener {
             val activityToIntent = Intent(
@@ -53,7 +62,6 @@ class BoxList : AppCompatActivity() {
             )
             startActivity(activityToIntent)
         }
-
     }
 
     fun byteToBit(byteArray: ByteArray?): Bitmap?{

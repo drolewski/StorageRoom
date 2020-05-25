@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditBox">
+
+    <EditText
+        android:id="@+id/editBoxName"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Box Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.198"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editBoxCommentary"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:inputType="textPersonName"
+        android:text="Commentary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editBoxLocalization" />
+
+    <TextView
+        android:id="@+id/editBoxQrCode"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="QrCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editBoxCommentary" />
+
+    <Spinner
+        android:id="@+id/editBoxLocalization"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editBoxName" />
+
+    <ListView
+        android:id="@+id/editBoxItemList"
+        android:layout_width="340dp"
+        android:layout_height="310dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addItemSpinner"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <Button
+        android:id="@+id/editBoxUpdate"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/editBoxName"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/editBoxDelete"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:text="Delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/editBoxQrCode"
+        app:layout_constraintTop_toBottomOf="@+id/editBoxCommentary" />
+
+    <Spinner
+        android:id="@+id/addItemSpinner"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="36dp"
+
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editBoxQrCode" />
+
+    <Button
+        android:id="@+id/addItemButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:text="+"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/addItemSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/editBoxDelete" />
+</androidx.constraintlayout.widget.ConstraintLayout>

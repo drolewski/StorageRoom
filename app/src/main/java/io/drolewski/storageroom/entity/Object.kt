@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
 )
 data class Object(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "object_id") val objectId: Int,
-    @ColumnInfo(name = "object_name") val objectName: String,
+    @ColumnInfo(name = "object_name") var objectName: String,
     @ColumnInfo(name = "ean") val ean: String?,
-    @ColumnInfo(name = "commentary") val commentary: String,
-    @ColumnInfo(name = "box_id") val boxId: Int?
+    @ColumnInfo(name = "commentary") var commentary: String,
+    @ColumnInfo(name = "box_id") var boxId: Int?
 )
