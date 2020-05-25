@@ -68,7 +68,7 @@ class EditBox : AppCompatActivity() {
                 itemsList.map {
                         value ->
                     ItemInBoxViewModel(
-                        value.objectName,
+                        value.objectName!!,
                         value.ean
                     )
                 }.let { it1 ->
@@ -148,7 +148,7 @@ class EditBox : AppCompatActivity() {
             val list = ArrayList<String>()
             for( i in itemList){
                 if(i.boxId == null){
-                    list.add(i.objectName)
+                    list.add(i.objectName!!)
                 }
             }
             val adapter = ArrayAdapter<String>(this, R.layout.list_element, list)

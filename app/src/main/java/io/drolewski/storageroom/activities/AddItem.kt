@@ -49,6 +49,15 @@ class AddItem : AppCompatActivity() {
             )
             startActivity(activityToIntent)
         }
+
+        itemList.setOnItemClickListener { parent, view, position, id ->
+            val activityToIntent = Intent(
+                applicationContext,
+                EditObject::class.java
+            )
+            activityToIntent.putExtra("id", id)
+            startActivity(activityToIntent)
+        }
     }
 
     fun byteToBit(byteArray: ByteArray?): Bitmap?{

@@ -5,13 +5,18 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.EditText
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.zxing.integration.android.IntentIntegrator
+import io.drolewski.storageroom.adapters.ItemCategoryElementAdapter
+import io.drolewski.storageroom.adapters.OnSpinerSelectedListner
 import io.drolewski.storageroom.database.AppDatabase
 import io.drolewski.storageroom.entity.Object
+import io.drolewski.storageroom.entity.ObjectCategoryCrossRef
 import io.drolewski.storageroom.entity.Photo
+import io.drolewski.storageroom.model.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_add_single_item.*
 import java.io.ByteArrayOutputStream
 
@@ -20,6 +25,7 @@ class AddSingleItem : AppCompatActivity() {
     var imageBitmap: Bitmap? = null
     val REQUEST_IMAGE_CAPTURE = 1
     val PERMISSION_REQUEST_CODE = 200
+    var scannerResult: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +86,10 @@ class AddSingleItem : AppCompatActivity() {
         commentary.setOnClickListener {
             commentary.text.clear()
         }
+
+        takeEANCodeFromItem.setOnClickListener {
+            IntentIntegrator(this).initiateScan()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -87,6 +97,11 @@ class AddSingleItem : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             imageBitmap = data!!.extras!!.get("data") as Bitmap
             itemImage.setImageBitmap(imageBitmap)
+        }else if(resultCode == RESULT_OK){
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+            scannerResult = result.contents.toString()
+            val editText = findViewById<EditText>(R.id.ean)
+            editText.setText(scannerResult, TextView.BufferType.EDITABLE)
         }
     }
 

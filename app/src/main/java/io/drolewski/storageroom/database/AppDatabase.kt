@@ -18,6 +18,7 @@ public abstract class AppDatabase : RoomDatabase() {
     abstract fun localizationDAO(): LocalizationDAO
     abstract fun objectDAO(): ObjectDAO
     abstract fun photoDAO(): PhotoDAO
+    abstract fun categoryObjectDAO(): CategoryObjectDAO
 
     companion object {
         @Volatile private var instance: AppDatabase? = null
