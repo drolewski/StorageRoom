@@ -12,6 +12,7 @@ import io.drolewski.storageroom.entity.Object
 import io.drolewski.storageroom.model.BoxViewModel
 import io.drolewski.storageroom.model.ItemInBoxViewModel
 import kotlinx.android.synthetic.main.activity_add_item.*
+import kotlinx.android.synthetic.main.activity_box_list.*
 import kotlinx.android.synthetic.main.activity_edit_box.*
 import kotlinx.android.synthetic.main.activity_item_in_box_element.*
 import kotlinx.android.synthetic.main.activity_item_in_box_element.view.*
@@ -120,6 +121,21 @@ class EditBox : AppCompatActivity() {
             val activityToIntent = Intent(
                 applicationContext,
                 MenuStart::class.java
+            )
+            startActivity(activityToIntent)
+        }
+
+        editBoxItemList.setOnItemClickListener{parent, view, position, id ->
+            Thread {
+                val db = AppDatabase(applicationContext)
+                val bId = db.boxDAO().getAll()[boxId].boxId
+                val item = db.objectDAO().getAllWithBoxId(bId)[id.toInt()]
+                item.boxId = null
+                db.objectDAO().update(item)
+            }.start()
+            val activityToIntent = Intent(
+                applicationContext,
+                BoxList::class.java
             )
             startActivity(activityToIntent)
         }
