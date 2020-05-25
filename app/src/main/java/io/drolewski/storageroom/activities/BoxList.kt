@@ -1,10 +1,12 @@
 package io.drolewski.storageroom.activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.ListView
 import io.drolewski.storageroom.adapters.BoxElementAdapter
 import io.drolewski.storageroom.adapters.ItemElementAdapter
@@ -37,10 +39,12 @@ class BoxList : AppCompatActivity() {
                     BoxElementAdapter(it, it1)
                 }
             }
-
-            val list: ListView? = findViewById(R.id.boxList)
-            list!!.adapter = adapter
+            this.runOnUiThread(java.lang.Runnable {
+                val list: ListView? = findViewById(R.id.boxList)
+                list!!.adapter = adapter
+            })
         }.start()
+
 
         addBoxButton.setOnClickListener {
             val activityToIntent = Intent(
@@ -49,6 +53,7 @@ class BoxList : AppCompatActivity() {
             )
             startActivity(activityToIntent)
         }
+
     }
 
     fun byteToBit(byteArray: ByteArray?): Bitmap?{

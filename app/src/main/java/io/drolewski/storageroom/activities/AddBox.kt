@@ -6,29 +6,61 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.AdapterView
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.integration.android.IntentIntegrator
+import io.drolewski.storageroom.adapters.OnSpinerSelectedListner
+import io.drolewski.storageroom.database.AppDatabase
+import io.drolewski.storageroom.entity.Box
+import io.drolewski.storageroom.entity.Photo
 import kotlinx.android.synthetic.main.activity_add_box.*
 import kotlinx.android.synthetic.main.activity_add_box.takePhoto
-import kotlinx.android.synthetic.main.activity_add_single_item.*
+import java.io.ByteArrayOutputStream
 
-class AddBox : Activity(), AdapterView.OnItemSelectedListener {
+class AddBox : Activity() {
 
     var imageBitmap: Bitmap? = null
     val REQUEST_IMAGE_CAPTURE = 1
-    val REQUEST_SCAN = 2
     var scannerResult: String? = null
-
+    var selectedItemInSpinner = OnSpinerSelectedListner()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_box)
 
+        addItemsToDropdown()
+        val spinner = findViewById<Spinner>(R.id.localizationList)
+        spinner.setOnItemSelectedListener(selectedItemInSpinner)
+
         addBoxButton.setOnClickListener {
             if (validateField(boxName) && validateField(commentaryBox) && validateField(qrCode) && boxPhoto != null) {
-
+                Thread{
+                    val db = AppDatabase(applicationContext)
+                    val boxId = db.boxDAO().getAll().size + 1
+                    val photoId = db.photoDAO().getAll().size + 1
+                    val stream = ByteArrayOutputStream()
+                    imageBitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
+                    db.photoDAO().add(Photo(
+                        photoId,
+                        stream.toByteArray(),
+                        null
+                    ))
+                    if (selectedItemInSpinner.selectedItemInSpinner == null){
+                        selectedItemInSpinner.selectedItemInSpinner = "everywhere"
+                    }
+                    db.boxDAO().add(Box(
+                        boxId,
+                        boxName.text.toString().trim(),
+                        selectedItemInSpinner.selectedItemInSpinner!!,
+                        commentaryBox.text.toString().trim(),
+                        qrCode.text.toString().trim(),
+                        photoId
+                    ))
+                }.start()
+                val activityToIntent = Intent(
+                    applicationContext,
+                    MenuStart::class.java
+                )
+                startActivity(activityToIntent)
             }
         }
 
@@ -45,16 +77,32 @@ class AddBox : Activity(), AdapterView.OnItemSelectedListener {
         }
 
         qrCode.setOnClickListener{
-            itemName.text.clear()
+            qrCode.text.clear()
         }
 
         commentaryBox.setOnClickListener{
-            ean.text.clear()
+            commentaryBox.text.clear()
         }
 
         boxName.setOnClickListener{
-            commentary.text.clear()
+            boxName.text.clear()
         }
+    }
+
+    private fun addItemsToDropdown() {
+        val spinner = findViewById<Spinner>(R.id.localizationList)
+        Thread{
+            val db = AppDatabase(applicationContext)
+            val localizationList = db.localizationDAO().getAll()
+            val list = ArrayList<String>()
+            for( i in localizationList){
+                list.add(i.localizationName)
+            }
+            val adapter = ArrayAdapter<String>(this, R.layout.list_element, list)
+            adapter.setDropDownViewResource(R.layout.list_element)
+            spinner.setAdapter(adapter)
+
+        }.start()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -78,13 +126,5 @@ class AddBox : Activity(), AdapterView.OnItemSelectedListener {
             return false
         }
         return true
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

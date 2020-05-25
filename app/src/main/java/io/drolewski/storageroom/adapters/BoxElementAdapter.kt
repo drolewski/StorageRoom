@@ -20,10 +20,10 @@ public class BoxElementAdapter(context: Context?, users: List<BoxViewModel?>?) :
             convertView = LayoutInflater.from(context).inflate(R.layout.box_element, parent, false)
         }
 
-        val name = convertView!!.findViewById<View>(R.id.boxName) as TextView
-        val localization = convertView!!.findViewById<View>(R.id.boxLocalization) as TextView
-        val qrCode = convertView!!.findViewById<View>(R.id.boxQRcode) as TextView
-        val photo = convertView!!.findViewById<View>(R.id.boxPhotoEle) as ImageView
+        val name = convertView!!.findViewById<View>(R.id.boxNameEle) as TextView
+        val localization = convertView.findViewById<View>(R.id.boxLocalizationEle) as TextView
+        val qrCode = convertView.findViewById<View>(R.id.boxQRcode) as TextView
+        val photo = convertView.findViewById<View>(R.id.boxPhotoEle) as ImageView
 
         name.text = boxViewModel?.name
         localization.text = boxViewModel?.localization
