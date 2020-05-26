@@ -17,6 +17,7 @@ import io.drolewski.storageroom.adapters.SearchItemAdapter
 import io.drolewski.storageroom.database.AppDatabase
 import io.drolewski.storageroom.entity.Box
 import io.drolewski.storageroom.entity.Object
+import io.drolewski.storageroom.entity.ObjectWithCategory
 import io.drolewski.storageroom.entity.ObjectWithPhotos
 import io.drolewski.storageroom.model.ItemInBoxViewModel
 import io.drolewski.storageroom.model.SearchItemViewModel
@@ -29,6 +30,7 @@ class Search : AppCompatActivity() {
     var imageBitmap: Bitmap? = null
     val REQUEST_IMAGE_CAPTURE = 1
     var isEAN = false
+    var listOfSearch = ArrayList<ObjectWithPhotos>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +58,7 @@ class Search : AppCompatActivity() {
                     for(i in objectsFromDb){
                         objectAndGivenCategory.add(i)
                     }
-
+                    listOfSearch = objectAndGivenCategory
                     val adapter = this.applicationContext.let {
                         objectAndGivenCategory.map {
                                 value ->
@@ -74,14 +76,14 @@ class Search : AppCompatActivity() {
                     })
                 }
             }.start()
-            searchShowBox.visibility = View.VISIBLE
         }
 
-        searchShowBox.setOnClickListener {
+        searchingResult.setOnItemClickListener { parent, view, position, id ->
             val activityToIntent = Intent(
                 applicationContext,
-                MenuStart::class.java
+                SearchBox::class.java
             )
+            activityToIntent.putExtra("boxId", listOfSearch[position].objectThing.boxId)
             startActivity(activityToIntent)
         }
         searchName.setOnClickListener {
