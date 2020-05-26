@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
+import io.drolewski.storageroom.database.AppDatabase
 import kotlinx.android.synthetic.main.activity_menu_start.*
 import java.io.File
 import java.io.FileInputStream
@@ -60,34 +61,8 @@ class MenuStart : AppCompatActivity() {
 
         button_export.setOnClickListener {
             //export
-            File("//data//data//io.drolewski.storageroom//databases//storage-room.db").let{
-                sourceFile ->
-                val file = File("//storage//self//primary//Documents//storage-room-export.db")
-                if(file.exists()){
-                    file.delete()
-                }
-                Toast.makeText(applicationContext, file.toString(), LENGTH_SHORT).show()
-                sourceFile.copyTo(file)
-            }
-            File("//data//data//io.drolewski.storageroom//databases//storage-room.db-shm").let{
-                    sourceFile ->
-                val file = File("//storage//self//primary//Documents//storage-room-export.db-shm")
-                if(file.exists()){
-                    file.delete()
-                }
-                Toast.makeText(applicationContext, file.toString(), LENGTH_SHORT).show()
-                sourceFile.copyTo(file)
-            }
-            File("//data//data//io.drolewski.storageroom//databases//storage-room.db-wal").let{
-                    sourceFile ->
-                val file = File("//storage//self//primary//Documents//storage-room-export.db-wal")
-                if(file.exists()){
-                    file.delete()
-                }
-                Toast.makeText(applicationContext, file.toString(), LENGTH_SHORT).show()
-                sourceFile.copyTo(file)
-            }
-
+            val db = AppDatabase(applicationContext)
+            db.exportDatabase(applicationContext)
         }
     }
 }
