@@ -83,8 +83,13 @@ class Search : AppCompatActivity() {
                 applicationContext,
                 SearchBox::class.java
             )
-            activityToIntent.putExtra("boxId", listOfSearch[position].objectThing.boxId)
-            startActivity(activityToIntent)
+            if(listOfSearch[id.toInt()].objectThing.boxId == null){
+                startSearching.setError("There are items without box")
+            }else{
+                activityToIntent.putExtra("boxId", listOfSearch[id.toInt()].objectThing.boxId)
+                startActivity(activityToIntent)
+            }
+
         }
         searchName.setOnClickListener {
             searchName.text.clear()

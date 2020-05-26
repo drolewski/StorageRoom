@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import io.drolewski.storageroom.dao.*
 import io.drolewski.storageroom.entity.*
+import java.io.File
 
 @Database(
     entities = [Box::class, Category::class, Localization::class, Object::class,
