@@ -83,10 +83,10 @@ class Search : AppCompatActivity() {
                 applicationContext,
                 SearchBox::class.java
             )
-            if(listOfSearch[id.toInt()].objectThing.boxId == null){
+            if(listOfSearch[position].objectThing.boxId == null){
                 startSearching.setError("There are items without box")
             }else{
-                activityToIntent.putExtra("boxId", listOfSearch[id.toInt()].objectThing.boxId)
+                activityToIntent.putExtra("boxId", listOfSearch[position].objectThing.boxId)
                 startActivity(activityToIntent)
             }
 
@@ -114,6 +114,7 @@ class Search : AppCompatActivity() {
             Thread{
                 val db = AppDatabase(applicationContext)
                 val searchedObjects = db.objectDAO().getItemByEan(scannerResult)
+                listOfSearch = searchedObjects as ArrayList<ObjectWithPhotos>
                 val adapter = this.applicationContext.let {
                     searchedObjects.map {
                             value ->
@@ -152,6 +153,7 @@ class Search : AppCompatActivity() {
                             res.add(i)
                         }
                     }
+                    listOfSearch = res
                     val adapter = this.applicationContext.let {
                         res.map { value ->
                             SearchItemViewModel(
