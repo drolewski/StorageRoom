@@ -89,8 +89,9 @@ class EditBox : AppCompatActivity() {
             }.start()
             val activityToIntent = Intent(
                 applicationContext,
-                MenuStart::class.java
+                EditBox::class.java
             )
+            activityToIntent.putExtra("id", boxId)
             startActivity(activityToIntent)
         }
 
