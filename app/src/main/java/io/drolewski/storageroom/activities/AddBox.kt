@@ -32,35 +32,43 @@ class AddBox : Activity() {
         spinner.setOnItemSelectedListener(selectedItemInSpinner)
 
         addBoxButton.setOnClickListener {
-            if (validateField(boxName) && validateField(commentaryBox) && validateField(qrCode) && boxPhoto != null) {
-                Thread{
-                    val db = AppDatabase(applicationContext)
-                    val boxId = db.boxDAO().getAll().size + 1
-                    val photoId = db.photoDAO().getAll().size + 1
-                    val stream = ByteArrayOutputStream()
-                    imageBitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
-                    db.photoDAO().add(Photo(
-                        photoId,
-                        stream.toByteArray(),
-                        null
-                    ))
-                    if (selectedItemInSpinner.selectedItemInSpinner == null){
-                        selectedItemInSpinner.selectedItemInSpinner = "ogolne"
-                    }
-                    db.boxDAO().add(Box(
-                        boxId,
-                        boxName.text.toString().trim(),
-                        selectedItemInSpinner.selectedItemInSpinner!!,
-                        commentaryBox.text.toString().trim(),
-                        qrCode.text.toString().trim(),
-                        photoId
-                    ))
-                }.start()
-                val activityToIntent = Intent(
-                    applicationContext,
-                    MenuStart::class.java
-                )
-                startActivity(activityToIntent)
+            if (validateField(boxName) && validateField(commentaryBox) && validateField(qrCode)) {
+                if(imageBitmap == null){
+                    takePhoto.setError("Please take box photo")
+                }else {
+                    Thread {
+                        val db = AppDatabase(applicationContext)
+                        val boxId = db.boxDAO().getAll().size + 1
+                        val photoId = db.photoDAO().getAll().size + 1
+                        val stream = ByteArrayOutputStream()
+                        imageBitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
+                        db.photoDAO().add(
+                            Photo(
+                                photoId,
+                                stream.toByteArray(),
+                                null
+                            )
+                        )
+                        if (selectedItemInSpinner.selectedItemInSpinner == null) {
+                            selectedItemInSpinner.selectedItemInSpinner = "ogolne"
+                        }
+                        db.boxDAO().add(
+                            Box(
+                                boxId,
+                                boxName.text.toString().trim(),
+                                selectedItemInSpinner.selectedItemInSpinner!!,
+                                commentaryBox.text.toString().trim(),
+                                qrCode.text.toString().trim(),
+                                photoId
+                            )
+                        )
+                    }.start()
+                    val activityToIntent = Intent(
+                        applicationContext,
+                        MenuStart::class.java
+                    )
+                    startActivity(activityToIntent)
+                }
             }
         }
 

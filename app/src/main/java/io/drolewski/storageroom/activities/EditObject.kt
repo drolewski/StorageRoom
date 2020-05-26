@@ -34,9 +34,9 @@ class EditObject : AppCompatActivity() {
 
         Thread{
             val db = AppDatabase(applicationContext)
-            editObjectEAN.text = db.objectDAO().getAll()[itemId].ean
+            editObjectEAN.text = db.objectDAO().getAllWithPhotos()[itemId].objectThing.ean
 
-            val objectId = db.objectDAO().getAll()[itemId].objectId
+            val objectId = db.objectDAO().getAllWithPhotos()[itemId].objectThing.objectId
             val itemsList = db.categoryObjectDAO().getByObjectId(objectId)
             var categoryList: ArrayList<Category>? = ArrayList<Category>()
             for(i in itemsList){
@@ -66,7 +66,7 @@ class EditObject : AppCompatActivity() {
         editObjectUpdate.setOnClickListener {
             Thread{
                 val db = AppDatabase(applicationContext)
-                val itemFromDb = db.objectDAO().getAll()[itemId]
+                val itemFromDb = db.objectDAO().getAllWithPhotos()[itemId].objectThing
                 itemFromDb.commentary = editObjectCommentary.text.toString()
                 itemFromDb.objectName = editObjectName.text.toString()
                 db.objectDAO().update(itemFromDb)
@@ -81,7 +81,7 @@ class EditObject : AppCompatActivity() {
         editObjectDelete.setOnClickListener {
             Thread{
                 val db = AppDatabase(applicationContext)
-                val itemFromDb = db.objectDAO().getAll()[itemId]
+                val itemFromDb = db.objectDAO().getAllWithPhotos()[itemId].objectThing
                 db.objectDAO().delete(itemFromDb)
             }.start()
             val activityToIntent = Intent(
@@ -94,7 +94,7 @@ class EditObject : AppCompatActivity() {
         addCategoryButton.setOnClickListener {
             Thread{
                 val db = AppDatabase(applicationContext)
-                val itemFromDb = db.objectDAO().getAll()[itemId]
+                val itemFromDb = db.objectDAO().getAllWithPhotos()[itemId].objectThing
                 val categories = db.categoryDAO().getAll()
                 var categoryFromDb: Category? = null
                 for(i in categories){
@@ -124,7 +124,7 @@ class EditObject : AppCompatActivity() {
         editObjectCategoryList.setOnItemClickListener { parent, view, position, id ->
             Thread {
                 val db = AppDatabase(applicationContext)
-                val oId = db.objectDAO().getAll()[itemId].objectId
+                val oId = db.objectDAO().getAllWithPhotos()[itemId].objectThing.objectId
                 val categoriesWithObjects = db.categoryObjectDAO().getByObjectId(oId)
                 val selectedCategoryId = categoriesWithObjects[position].categoryId
 

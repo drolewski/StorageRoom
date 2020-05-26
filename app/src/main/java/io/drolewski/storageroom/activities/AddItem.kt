@@ -26,7 +26,6 @@ class AddItem : AppCompatActivity() {
             val adapter = this.applicationContext.let {
                 itemsList.map {
                     value ->
-
                         ObjectViewModel(
                             value.objectThing.objectName,
                             value.objectThing.ean.toString(),

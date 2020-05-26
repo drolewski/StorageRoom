@@ -37,33 +37,37 @@ class AddSingleItem : AppCompatActivity() {
 
         addIt.setOnClickListener {
             var preparedEAN: String? = null
-            if (validateField(itemName) && validateField(commentary) && imageBitmap != null) {
+            if (validateField(itemName) && validateField(commentary)) {
                 if (ean.text.toString().trim().isNotEmpty()) {
                     preparedEAN = ean.text.toString().trim()
                 }
 
-                Thread {
-                    val db = AppDatabase(applicationContext)
-                    val objId = db.objectDAO().getAll().size + 1
-                    db.objectDAO().add(
-                        Object(
-                            objId,
-                            itemName.text.toString().trim(),
-                            preparedEAN,
-                            commentary.text.toString().trim(),
-                            null
+                if(imageBitmap == null){
+                    takePhoto.setError("Please take photo")
+                }else{
+                    Thread {
+                        val db = AppDatabase(applicationContext)
+                        val objId = db.objectDAO().getAll().size + 1
+                        db.objectDAO().add(
+                            Object(
+                                objId,
+                                itemName.text.toString().trim(),
+                                preparedEAN,
+                                commentary.text.toString().trim(),
+                                null
+                            )
                         )
+                        val stream = ByteArrayOutputStream()
+                        imageBitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
+                        db.photoDAO()
+                            .add(Photo(db.photoDAO().getAll().size + 1, stream.toByteArray(), objId))
+                    }.start()
+                    val activityToIntent = Intent(
+                        applicationContext,
+                        AddItem::class.java
                     )
-                    val stream = ByteArrayOutputStream()
-                    imageBitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
-                    db.photoDAO()
-                        .add(Photo(db.photoDAO().getAll().size + 1, stream.toByteArray(), objId))
-                }.start()
-                val activityToIntent = Intent(
-                    applicationContext,
-                    AddItem::class.java
-                )
-                startActivity(activityToIntent)
+                    startActivity(activityToIntent)
+                }
             }
         }
 
