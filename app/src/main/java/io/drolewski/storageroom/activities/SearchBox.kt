@@ -11,6 +11,8 @@ import com.google.zxing.integration.android.IntentIntegrator
 import io.drolewski.storageroom.adapters.BoxItemElementAdapter
 import io.drolewski.storageroom.adapters.OnSpinerSelectedListner
 import io.drolewski.storageroom.database.AppDatabase
+import io.drolewski.storageroom.entity.Box
+import io.drolewski.storageroom.entity.Localization
 import io.drolewski.storageroom.model.ItemInBoxViewModel
 import kotlinx.android.synthetic.main.activity_add_box.*
 import kotlinx.android.synthetic.main.activity_edit_box.*
@@ -102,7 +104,17 @@ class SearchBox : AppCompatActivity() {
             Thread {
                 val db = AppDatabase(applicationContext)
                 val item = db.objectDAO().getAllWithBoxId(boxId)[id.toInt()]
-                item.boxId = null
+                var ogolneId: Int? = null
+                if(db.boxDAO().getByBoxName("ogolne").isNotEmpty()){
+                    ogolneId = db.boxDAO().getByBoxName("ogolne")[0].boxId
+                }else{
+                    if(db.localizationDAO().getByName("ogolne").isEmpty()){
+                        db.localizationDAO().add(Localization("ogolne"))
+                    }
+                    ogolneId = db.boxDAO().getAll().size + 1
+                    db.boxDAO().add(Box(ogolneId, "ogolne", "ogolne", "ogolne", "ogolne", db.photoDAO().getAll()[0].photoId))
+                }
+                item.boxId = ogolneId
                 db.objectDAO().update(item)
             }.start()
             val activityToIntent = Intent(
@@ -158,9 +170,16 @@ class SearchBox : AppCompatActivity() {
             val db = AppDatabase(applicationContext)
             val itemList = db.objectDAO().getAll()
             val list = ArrayList<String>()
+            var ogolneList  = db.boxDAO().getByBoxName("ogolne")
+            var ogolne : Box
+            if(ogolneList.isNotEmpty()){
+                ogolne = ogolneList[0]
+            }else{
+                ogolne = Box(-1, "", "", "", "", null)
+            }
             for( i in itemList){
-                if(i.boxId == null){
-                    list.add(i.objectName!!)
+                if(i.boxId == null || i.boxId == ogolne.boxId){
+                    list.add(i.objectName)
                 }
             }
             val adapter = ArrayAdapter<String>(this, R.layout.list_element, list)

@@ -19,4 +19,7 @@ abstract class BoxDAO : GenericDAO<Box>() {
 
     @Query("SELECT * FROM Box where qr_code = :scannerResult")
     abstract fun getByQrCode(scannerResult: String): List<Box>
+
+    @Query("SELECT * FROM Box where box_name = :s")
+    abstract fun getByBoxName(s: String): List<Box>
 }
