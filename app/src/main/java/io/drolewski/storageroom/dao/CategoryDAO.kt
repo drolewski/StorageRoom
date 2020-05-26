@@ -12,4 +12,7 @@ abstract class CategoryDAO : GenericDAO<Category>(){
 
     @Query("SELECT * FROM Category where category_id = :entityId")
     abstract fun getById(entityId: Int): Category
+
+    @Query("SELECT * FROM Category where category_name LIKE :searching")
+    abstract fun getSearching(searching: String): List<Category>
 }

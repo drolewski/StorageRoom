@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditObject"></activity>
+        <activity android:name=".SearchResult"></activity>
+        <activity android:name=".Search" />
+        <activity android:name=".EditObject" />
         <activity android:name=".AddCategory" />
         <activity android:name=".EditBox" />
         <activity android:name=".BoxList" />
