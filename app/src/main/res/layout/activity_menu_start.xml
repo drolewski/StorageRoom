@@ -54,4 +54,15 @@
         app:layout_constraintStart_toEndOf="@+id/addBox"
         app:layout_constraintTop_toBottomOf="@+id/locList" />
 
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="28dp"
+        android:text="Search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addBox" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

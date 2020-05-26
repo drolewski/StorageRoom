@@ -42,5 +42,13 @@ class MenuStart : AppCompatActivity() {
             )
             startActivity(activityToIntent)
         }
+
+        searchButton.setOnClickListener {
+            val activityToIntent = Intent(
+                applicationContext,
+                Search::class.java
+            )
+            startActivity(activityToIntent)
+        }
     }
 }
